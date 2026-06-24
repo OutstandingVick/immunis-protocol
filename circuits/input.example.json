@@ -1,0 +1,13 @@
+{
+  "wallet_secret": "123456789",
+  "birth_year": "1994",
+  "investor_score": "781",
+  "jurisdiction_code": "840",
+  "current_year": "2026",
+  "min_age": "18",
+  "min_score": "720",
+  "allowed_jurisdiction_hash": "0",
+  "policy_id": "1001",
+  "wallet_hash": "0",
+  "nullifier": "0"
+}

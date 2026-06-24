@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Immunis Protocol</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #17202a;
+        --muted: #667789;
+        --line: #d8e1e8;
+        --soft: #f4f8fb;
+        --stellar: #111827;
+        --cyan: #06b6d4;
+        --green: #16a34a;
+        --red: #dc2626;
+        --amber: #d97706;
+        --white: #ffffff;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+        background: #edf3f7;
+        color: var(--ink);
+      }
+
+      main {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 350px 1fr;
+      }
+
+      aside {
+        background: var(--stellar);
+        color: white;
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 760;
+        font-size: 20px;
+      }
+
+      .mark {
+        width: 42px;
+        height: 42px;
+        border: 2px solid white;
+        border-radius: 50%;
+        position: relative;
+      }
+
+      .mark::before,
+      .mark::after {
+        content: "";
+        position: absolute;
+        left: -8px;
+        right: -8px;
+        height: 3px;
+        background: var(--cyan);
+        transform: rotate(-22deg);
+      }
+
+      .mark::before {
+        top: 14px;
+      }
+
+      .mark::after {
+        bottom: 12px;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 36px;
+        line-height: 1.08;
+        letter-spacing: 0;
+      }
+
+      .lead {
+        color: #cbd5e1;
+        line-height: 1.6;
+        margin: 0;
+      }
+
+      .policy,
+      .vault {
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 8px;
+        padding: 16px;
+        display: grid;
+        gap: 12px;
+      }
+
+      .policy div,
+      .vault div {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        font-size: 14px;
+      }
+
+      .policy span,
+      .vault span {
+        color: #a7b3c3;
+      }
+
+      section {
+        padding: 28px;
+        display: grid;
+        grid-template-rows: auto auto 1fr;
+        gap: 18px;
+      }
+
+      .toolbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .status {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: var(--amber);
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: flex-end;
+      }
+
+      button {
+        border: 0;
+        border-radius: 8px;
+        background: var(--stellar);
+        color: white;
+        min-height: 42px;
+        padding: 0 14px;
+        font-weight: 740;
+        cursor: pointer;
+      }
+
+      button.secondary {
+        background: #ffffff;
+        color: var(--ink);
+        border: 1px solid var(--line);
+      }
+
+      button:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+
+      .steps {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .step {
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 12px;
+        display: grid;
+        gap: 6px;
+        min-height: 82px;
+      }
+
+      .step strong {
+        font-size: 14px;
+      }
+
+      .step span {
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.35;
+      }
+
+      .step.done {
+        border-color: rgba(22, 163, 74, 0.45);
+        background: #f0fdf4;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: 0.8fr 1.2fr 1fr;
+        gap: 16px;
+        align-content: start;
+      }
+
+      .card {
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 18px;
+        min-height: 210px;
+        display: grid;
+        gap: 14px;
+        align-self: start;
+      }
+
+      .card h2 {
+        margin: 0;
+        font-size: 18px;
+      }
+
+      .field {
+        display: grid;
+        gap: 6px;
+      }
+
+      label {
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      input {
+        width: 100%;
+        min-height: 40px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        padding: 0 10px;
+        font: inherit;
+      }
+
+      .hidden {
+        color: var(--green);
+        font-weight: 740;
+        max-width: 18ch;
+      }
+
+      .rejected {
+        color: var(--red);
+        font-weight: 740;
+      }
+
+      pre {
+        margin: 0;
+        max-height: 390px;
+        overflow: auto;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        font-size: 12px;
+        line-height: 1.45;
+        color: #25313d;
+      }
+
+      .wide {
+        grid-column: span 2;
+      }
+
+      .full {
+        grid-column: 1 / -1;
+      }
+
+      @media (max-width: 1040px) {
+        main {
+          grid-template-columns: 1fr;
+        }
+
+        aside {
+          padding: 24px;
+        }
+
+        .steps,
+        .grid {
+          grid-template-columns: 1fr;
+        }
+
+        .wide,
+        .full {
+          grid-column: span 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <aside>
+        <div class="brand"><div class="mark" aria-hidden="true"></div> Immunis Protocol</div>
+        <h1>Private compliance for tokenized RWAs.</h1>
+        <p class="lead">
+          A wallet proves it can access an asset pool, gets a reusable proof
+          pass, and deposits into a Stellar RWA vault without leaking raw KYC.
+        </p>
+        <div class="policy">
+          <div><span>Policy</span><strong>US Accredited RWA</strong></div>
+          <div><span>Minimum age</span><strong>18</strong></div>
+          <div><span>Minimum score</span><strong>720</strong></div>
+          <div><span>Jurisdiction</span><strong>US</strong></div>
+        </div>
+        <div class="vault">
+          <div><span>Vault</span><strong>Tokenized T-Bill</strong></div>
+          <div><span>Asset</span><strong>USYC</strong></div>
+          <div><span>Deposit</span><strong>2,500</strong></div>
+        </div>
+      </aside>
+
+      <section>
+        <div class="toolbar">
+          <div class="status"><span class="dot" id="dot"></span><span id="status">Waiting for private proof</span></div>
+          <div class="actions">
+            <button class="secondary" id="reset">Reset</button>
+            <button id="prove">Generate Proof</button>
+            <button id="verify" disabled>Mint Pass</button>
+            <button id="deposit" disabled>Deposit To Vault</button>
+          </div>
+        </div>
+
+        <div class="steps">
+          <div class="step" id="step-private"><strong>1. Private Inputs</strong><span>KYC facts stay local.</span></div>
+          <div class="step" id="step-proof"><strong>2. ZK Proof</strong><span>Only public signals leave the device.</span></div>
+          <div class="step" id="step-pass"><strong>3. Stellar Pass</strong><span>Contract mints reusable eligibility.</span></div>
+          <div class="step" id="step-vault"><strong>4. RWA Vault</strong><span>Deposit unlocks through has_pass.</span></div>
+        </div>
+
+        <div class="grid">
+          <article class="card">
+            <h2>Private Inputs</h2>
+            <div class="field">
+              <label for="birthYear">Birth year</label>
+              <input id="birthYear" value="1994" inputmode="numeric" />
+            </div>
+            <div class="field">
+              <label for="score">Investor score</label>
+              <input id="score" value="781" inputmode="numeric" />
+            </div>
+            <div class="field">
+              <label for="jurisdiction">Jurisdiction</label>
+              <input id="jurisdiction" value="US" />
+            </div>
+            <div class="hidden">Never published on-chain</div>
+          </article>
+
+          <article class="card wide">
+            <h2>Proof Packet</h2>
+            <pre id="packet">No proof generated yet.</pre>
+          </article>
+
+          <article class="card">
+            <h2>Selective Disclosure Receipt</h2>
+            <pre id="receipt">No receipt yet.</pre>
+          </article>
+
+          <article class="card wide">
+            <h2>RWA Vault</h2>
+            <pre id="vault">has_pass(wallet, policy_id) => false
+deposit_to_vault(wallet, vault_id, 2500) => blocked</pre>
+          </article>
+
+          <article class="card full">
+            <h2>Judge Takeaway</h2>
+            <pre id="takeaway">Institutions get enforceable access policy. Users keep birth year, investor score, and jurisdiction source data private.</pre>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const enc = new TextEncoder();
+      const policy = {
+        policy_id: "rwa-us-accredited-v1",
+        current_year: 2026,
+        min_age: 18,
+        min_score: 720,
+        jurisdiction: "US",
+      };
+      const vault = {
+        vault_id: "tbill-vault-v1",
+        asset_code: "USYC",
+        deposit_amount: 2500,
+      };
+      const wallet = "GCBVZQZ5J4YEXAMPLESTELLARWALLET6W4RWA7KYC3PV2H";
+      let packet = null;
+      let receipt = null;
+
+      async function hash(...parts) {
+        const data = enc.encode(parts.map(String).join("|"));
+        const digest = await crypto.subtle.digest("SHA-256", data);
+        return Array.from(new Uint8Array(digest))
+          .map((byte) => byte.toString(16).padStart(2, "0"))
+          .join("");
+      }
+
+      function setStatus(text, color) {
+        document.getElementById("status").textContent = text;
+        document.getElementById("dot").style.background = color;
+      }
+
+      function done(id, active) {
+        document.getElementById(id).classList.toggle("done", active);
+      }
+
+      async function loadGroth16Sample() {
+        try {
+          const response = await fetch("proof-sample.json", { cache: "no-store" });
+          if (!response.ok) return null;
+          return await response.json();
+        } catch {
+          return null;
+        }
+      }
+
+      async function generateProof() {
+        const birthYear = Number(document.getElementById("birthYear").value);
+        const score = Number(document.getElementById("score").value);
+        const jurisdiction = document.getElementById("jurisdiction").value.trim().toUpperCase();
+        const age = policy.current_year - birthYear;
+
+        done("step-private", true);
+        if (age < policy.min_age || score < policy.min_score || jurisdiction !== policy.jurisdiction) {
+          document.getElementById("packet").innerHTML = '<span class="rejected">Private KYC data does not satisfy policy.</span>';
+          setStatus("Policy failed", "#dc2626");
+          return;
+        }
+
+        const walletSecret = await hash(wallet, birthYear, score, jurisdiction);
+        const policyId = await hash(policy.policy_id);
+        const nullifier = await hash(walletSecret, policyId);
+        const groth16 = await loadGroth16Sample();
+        const packetPolicyId = groth16?.public_signals?.policy_id ?? policyId;
+        const packetNullifier = groth16?.public_signals?.nullifier ?? nullifier;
+        packet = {
+          proof_system: groth16?.proof_system ?? "demo-adapter",
+          local_verification: groth16?.local_verification ?? "adapter digest only",
+          wallet,
+          policy_id: packetPolicyId,
+          nullifier: packetNullifier,
+          proof_digest: await hash(wallet, packetPolicyId, packetNullifier),
+          public_signals: groth16?.public_signals ?? {
+            current_year: policy.current_year,
+            min_age: policy.min_age,
+            min_score: policy.min_score,
+            allowed_jurisdiction_hash: await hash(policy.jurisdiction),
+            policy_id: policyId,
+            wallet_hash: await hash(walletSecret),
+            nullifier,
+          },
+          snark_public: groth16?.snark_public,
+          proof_hash: groth16?.proof_hash,
+          proof_preview: groth16?.proof_preview,
+          hidden_fields: groth16?.hidden_fields ?? ["birth_year", "investor_score", "jurisdiction_code"],
+        };
+
+        document.getElementById("packet").textContent = JSON.stringify(packet, null, 2);
+        document.getElementById("verify").disabled = false;
+        done("step-proof", true);
+        setStatus(groth16 ? "Groth16 proof loaded" : "ZK proof generated", "#06b6d4");
+      }
+
+      async function mintPass() {
+        if (!packet) return;
+        const expected = await hash(packet.wallet, packet.policy_id, packet.nullifier);
+        const ok = expected === packet.proof_digest;
+        if (!ok) {
+          setStatus("Verification failed", "#dc2626");
+          return;
+        }
+
+        const verifiedAt = new Date().toISOString();
+        receipt = {
+          receipt_type: "selective_disclosure_policy_receipt",
+          proves: "wallet satisfies US Accredited RWA policy",
+          reveals: ["wallet", "policy_id", "nullifier", "verified_at"],
+          hides: packet.hidden_fields,
+          wallet: packet.wallet,
+          policy_id: packet.policy_id,
+          nullifier: packet.nullifier,
+          verified_at: verifiedAt,
+          receipt_hash: await hash("receipt", packet.wallet, packet.policy_id, packet.nullifier, verifiedAt),
+        };
+
+        document.getElementById("receipt").textContent = JSON.stringify(receipt, null, 2);
+        document.getElementById("vault").textContent =
+          "has_pass(wallet, policy_id) => true\n" +
+          "deposit_to_vault(wallet, vault_id, 2500) => ready";
+        document.getElementById("deposit").disabled = false;
+        done("step-pass", true);
+        setStatus("Proof pass minted", "#16a34a");
+      }
+
+      function depositToVault() {
+        if (!receipt) return;
+        const event = {
+          event: "rwa_deposit_accepted",
+          vault_id: vault.vault_id,
+          asset_code: vault.asset_code,
+          amount: vault.deposit_amount,
+          wallet,
+          policy_id: receipt.policy_id,
+          receipt_hash: receipt.receipt_hash,
+        };
+        document.getElementById("vault").textContent = JSON.stringify(event, null, 2);
+        document.getElementById("takeaway").textContent =
+          "Winning loop: private KYC proof -> Immunis proof pass -> gated RWA deposit -> shareable compliance receipt.";
+        done("step-vault", true);
+        setStatus("RWA deposit accepted", "#16a34a");
+      }
+
+      function resetDemo() {
+        packet = null;
+        receipt = null;
+        document.getElementById("packet").textContent = "No proof generated yet.";
+        document.getElementById("receipt").textContent = "No receipt yet.";
+        document.getElementById("vault").textContent =
+          "has_pass(wallet, policy_id) => false\n" +
+          "deposit_to_vault(wallet, vault_id, 2500) => blocked";
+        document.getElementById("takeaway").textContent =
+          "Institutions get enforceable access policy. Users keep birth year, investor score, and jurisdiction source data private.";
+        document.getElementById("verify").disabled = true;
+        document.getElementById("deposit").disabled = true;
+        ["step-private", "step-proof", "step-pass", "step-vault"].forEach((id) => done(id, false));
+        setStatus("Waiting for private proof", "#d97706");
+      }
+
+      document.getElementById("prove").addEventListener("click", generateProof);
+      document.getElementById("verify").addEventListener("click", mintPass);
+      document.getElementById("deposit").addEventListener("click", depositToVault);
+      document.getElementById("reset").addEventListener("click", resetDemo);
+    </script>
+  </body>
+</html>

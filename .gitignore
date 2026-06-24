@@ -1,0 +1,6 @@
+/contracts/proof_pass/target/
+node_modules/
+build/
+!web/proof-sample.json
+.DS_Store
+*.log

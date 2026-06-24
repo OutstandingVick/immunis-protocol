@@ -1,0 +1,15 @@
+{
+  "name": "immunis-protocol",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "zk:input": "node scripts/generate-circom-input.mjs",
+    "zk:prove": "node scripts/prove.mjs"
+  },
+  "dependencies": {
+    "circomlib": "^2.0.5",
+    "circomlibjs": "^0.1.7",
+    "snarkjs": "^0.7.6"
+  }
+}
