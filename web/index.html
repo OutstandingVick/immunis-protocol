@@ -6,16 +6,18 @@
     <title>Immunis Protocol</title>
     <style>
       :root {
-        color-scheme: light;
-        --ink: #17202a;
-        --muted: #667789;
-        --line: #d8e1e8;
-        --soft: #f4f8fb;
-        --stellar: #111827;
-        --cyan: #06b6d4;
-        --green: #16a34a;
-        --red: #dc2626;
-        --amber: #d97706;
+        color-scheme: dark;
+        --bg: #080b10;
+        --panel: #10151d;
+        --panel-2: #151b24;
+        --ink: #f5f1e8;
+        --muted: #9ba8b7;
+        --line: rgba(245, 241, 232, 0.14);
+        --line-strong: rgba(245, 241, 232, 0.24);
+        --green: #85efac;
+        --cyan: #67e8f9;
+        --amber: #f2c36b;
+        --red: #fb7185;
         --white: #ffffff;
       }
 
@@ -25,26 +27,40 @@
 
       body {
         margin: 0;
+        min-height: 100vh;
         font-family:
           Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
           "Segoe UI", sans-serif;
-        background: #edf3f7;
+        background: var(--bg);
         color: var(--ink);
       }
 
-      main {
-        min-height: 100vh;
-        display: grid;
-        grid-template-columns: 350px 1fr;
+      button,
+      input {
+        font: inherit;
       }
 
-      aside {
-        background: var(--stellar);
-        color: white;
-        padding: 30px;
+      .page {
+        min-height: 100vh;
+        padding: 22px;
+      }
+
+      .shell {
+        min-height: calc(100vh - 44px);
+        border: 1px solid var(--line);
+        background: #0b0f15;
+        display: grid;
+        grid-template-rows: auto 1fr;
+      }
+
+      header {
+        min-height: 72px;
+        padding: 0 28px;
+        border-bottom: 1px solid var(--line);
         display: flex;
-        flex-direction: column;
-        gap: 24px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
       }
 
       .brand {
@@ -52,13 +68,13 @@
         align-items: center;
         gap: 12px;
         font-weight: 760;
-        font-size: 20px;
+        letter-spacing: 0;
       }
 
       .mark {
-        width: 42px;
-        height: 42px;
-        border: 2px solid white;
+        width: 38px;
+        height: 38px;
+        border: 1.5px solid var(--ink);
         border-radius: 50%;
         position: relative;
       }
@@ -69,72 +85,152 @@
         position: absolute;
         left: -8px;
         right: -8px;
-        height: 3px;
+        height: 2px;
         background: var(--cyan);
-        transform: rotate(-22deg);
+        transform: rotate(-20deg);
       }
 
       .mark::before {
-        top: 14px;
+        top: 13px;
       }
 
       .mark::after {
         bottom: 12px;
       }
 
+      nav {
+        display: flex;
+        align-items: center;
+        gap: 22px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .nav-action {
+        min-height: 40px;
+        padding: 0 14px;
+        border: 1px solid var(--line-strong);
+        border-radius: 8px;
+        background: var(--ink);
+        color: #11151b;
+        font-weight: 720;
+      }
+
+      main {
+        display: grid;
+        grid-template-columns: minmax(360px, 0.88fr) minmax(560px, 1.12fr);
+        min-height: 0;
+      }
+
+      .hero {
+        padding: 42px 32px;
+        border-right: 1px solid var(--line);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 32px;
+      }
+
+      .eyebrow {
+        color: var(--cyan);
+        font-size: 13px;
+        font-weight: 740;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
       h1 {
-        margin: 0;
-        font-size: 36px;
-        line-height: 1.08;
+        margin: 14px 0 0;
+        max-width: 760px;
+        font-size: 72px;
+        line-height: 0.95;
         letter-spacing: 0;
       }
 
       .lead {
-        color: #cbd5e1;
-        line-height: 1.6;
-        margin: 0;
+        max-width: 560px;
+        color: #c8d0db;
+        font-size: 18px;
+        line-height: 1.55;
+        margin: 22px 0 0;
       }
 
-      .policy,
-      .vault {
-        border: 1px solid rgba(255, 255, 255, 0.18);
-        border-radius: 8px;
-        padding: 16px;
-        display: grid;
-        gap: 12px;
-      }
-
-      .policy div,
-      .vault div {
+      .hero-actions {
+        margin-top: 30px;
         display: flex;
-        justify-content: space-between;
-        gap: 16px;
-        font-size: 14px;
+        flex-wrap: wrap;
+        gap: 10px;
       }
 
-      .policy span,
-      .vault span {
-        color: #a7b3c3;
+      button {
+        border: 1px solid transparent;
+        border-radius: 8px;
+        background: var(--ink);
+        color: #10151d;
+        min-height: 44px;
+        padding: 0 15px;
+        font-weight: 760;
+        cursor: pointer;
       }
 
-      section {
+      button.secondary {
+        background: transparent;
+        color: var(--ink);
+        border-color: var(--line-strong);
+      }
+
+      button:disabled {
+        opacity: 0.42;
+        cursor: not-allowed;
+      }
+
+      .proof-strip {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        border: 1px solid var(--line);
+      }
+
+      .metric {
+        padding: 18px;
+        border-right: 1px solid var(--line);
+      }
+
+      .metric:last-child {
+        border-right: 0;
+      }
+
+      .metric strong {
+        display: block;
+        font-size: 32px;
+        line-height: 1;
+      }
+
+      .metric span {
+        display: block;
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .workspace {
         padding: 28px;
         display: grid;
         grid-template-rows: auto auto 1fr;
-        gap: 18px;
+        gap: 16px;
+        min-width: 0;
       }
 
       .toolbar {
         display: flex;
-        justify-content: space-between;
         align-items: center;
+        justify-content: space-between;
         gap: 16px;
       }
 
       .status {
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 9px;
         color: var(--muted);
         font-size: 14px;
       }
@@ -148,47 +244,25 @@
 
       .actions {
         display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
         justify-content: flex-end;
-      }
-
-      button {
-        border: 0;
-        border-radius: 8px;
-        background: var(--stellar);
-        color: white;
-        min-height: 42px;
-        padding: 0 14px;
-        font-weight: 740;
-        cursor: pointer;
-      }
-
-      button.secondary {
-        background: #ffffff;
-        color: var(--ink);
-        border: 1px solid var(--line);
-      }
-
-      button:disabled {
-        opacity: 0.45;
-        cursor: not-allowed;
+        gap: 8px;
+        flex-wrap: wrap;
       }
 
       .steps {
         display: grid;
         grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 10px;
+        gap: 8px;
       }
 
       .step {
-        background: var(--white);
+        min-height: 92px;
+        background: var(--panel);
         border: 1px solid var(--line);
         border-radius: 8px;
-        padding: 12px;
+        padding: 13px;
         display: grid;
-        gap: 6px;
-        min-height: 82px;
+        gap: 7px;
       }
 
       .step strong {
@@ -202,31 +276,63 @@
       }
 
       .step.done {
-        border-color: rgba(22, 163, 74, 0.45);
-        background: #f0fdf4;
+        border-color: rgba(133, 239, 172, 0.46);
+        background: #102019;
       }
 
       .grid {
         display: grid;
-        grid-template-columns: 0.8fr 1.2fr 1fr;
-        gap: 16px;
+        grid-template-columns: minmax(220px, 0.72fr) minmax(340px, 1.28fr);
+        gap: 12px;
         align-content: start;
+        min-width: 0;
       }
 
       .card {
-        background: var(--white);
+        background: var(--panel);
         border: 1px solid var(--line);
         border-radius: 8px;
         padding: 18px;
-        min-height: 210px;
         display: grid;
         gap: 14px;
+        min-width: 0;
         align-self: start;
       }
 
       .card h2 {
         margin: 0;
-        font-size: 18px;
+        font-size: 17px;
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+
+      .policy-card {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .mini {
+        background: var(--panel-2);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 12px;
+        min-height: 78px;
+      }
+
+      .mini span {
+        display: block;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .mini strong {
+        display: block;
+        margin-top: 7px;
+        font-size: 15px;
+        overflow-wrap: anywhere;
       }
 
       .field {
@@ -241,17 +347,23 @@
 
       input {
         width: 100%;
-        min-height: 40px;
+        min-height: 42px;
         border: 1px solid var(--line);
-        border-radius: 6px;
-        padding: 0 10px;
-        font: inherit;
+        border-radius: 8px;
+        padding: 0 11px;
+        background: #0c1118;
+        color: var(--ink);
+        outline: none;
+      }
+
+      input:focus {
+        border-color: var(--cyan);
       }
 
       .hidden {
         color: var(--green);
         font-weight: 740;
-        max-width: 18ch;
+        font-size: 14px;
       }
 
       .rejected {
@@ -261,125 +373,194 @@
 
       pre {
         margin: 0;
-        max-height: 390px;
+        max-height: 338px;
         overflow: auto;
         white-space: pre-wrap;
         overflow-wrap: anywhere;
         font-size: 12px;
-        line-height: 1.45;
-        color: #25313d;
-      }
-
-      .wide {
-        grid-column: span 2;
+        line-height: 1.48;
+        color: #d7dee8;
+        background: #090d12;
+        border: 1px solid rgba(245, 241, 232, 0.08);
+        border-radius: 8px;
+        padding: 13px;
       }
 
       .full {
         grid-column: 1 / -1;
       }
 
-      @media (max-width: 1040px) {
+      @media (max-width: 1160px) {
         main {
           grid-template-columns: 1fr;
         }
 
-        aside {
-          padding: 24px;
+        .hero {
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
         }
 
+        h1 {
+          font-size: 56px;
+        }
+      }
+
+      @media (max-width: 760px) {
+        .page {
+          padding: 0;
+        }
+
+        .shell {
+          min-height: 100vh;
+          border-left: 0;
+          border-right: 0;
+        }
+
+        header,
+        .hero,
+        .workspace {
+          padding-left: 18px;
+          padding-right: 18px;
+        }
+
+        nav {
+          display: none;
+        }
+
+        h1 {
+          font-size: 42px;
+        }
+
+        .proof-strip,
         .steps,
-        .grid {
+        .grid,
+        .policy-card {
           grid-template-columns: 1fr;
         }
 
-        .wide,
-        .full {
-          grid-column: span 1;
+        .metric {
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+
+        .metric:last-child {
+          border-bottom: 0;
+        }
+
+        .toolbar {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .actions {
+          justify-content: flex-start;
         }
       }
     </style>
   </head>
   <body>
-    <main>
-      <aside>
-        <div class="brand"><div class="mark" aria-hidden="true"></div> Immunis Protocol</div>
-        <h1>Private compliance for tokenized RWAs.</h1>
-        <p class="lead">
-          A wallet proves it can access an asset pool, gets a reusable proof
-          pass, and deposits into a Stellar RWA vault without leaking raw KYC.
-        </p>
-        <div class="policy">
-          <div><span>Policy</span><strong>US Accredited RWA</strong></div>
-          <div><span>Minimum age</span><strong>18</strong></div>
-          <div><span>Minimum score</span><strong>720</strong></div>
-          <div><span>Jurisdiction</span><strong>US</strong></div>
-        </div>
-        <div class="vault">
-          <div><span>Vault</span><strong>Tokenized T-Bill</strong></div>
-          <div><span>Asset</span><strong>USYC</strong></div>
-          <div><span>Deposit</span><strong>2,500</strong></div>
-        </div>
-      </aside>
+    <div class="page">
+      <div class="shell">
+        <header>
+          <div class="brand"><div class="mark" aria-hidden="true"></div> Immunis Protocol</div>
+          <nav aria-label="Product navigation">
+            <span>Onboard</span>
+            <span>Policy</span>
+            <span>Vaults</span>
+            <button class="nav-action" type="button">Proof demo</button>
+          </nav>
+        </header>
 
-      <section>
-        <div class="toolbar">
-          <div class="status"><span class="dot" id="dot"></span><span id="status">Waiting for private proof</span></div>
-          <div class="actions">
-            <button class="secondary" id="reset">Reset</button>
-            <button id="prove">Generate Proof</button>
-            <button id="verify" disabled>Mint Pass</button>
-            <button id="deposit" disabled>Deposit To Vault</button>
-          </div>
-        </div>
-
-        <div class="steps">
-          <div class="step" id="step-private"><strong>1. Private Inputs</strong><span>KYC facts stay local.</span></div>
-          <div class="step" id="step-proof"><strong>2. ZK Proof</strong><span>Only public signals leave the device.</span></div>
-          <div class="step" id="step-pass"><strong>3. Stellar Pass</strong><span>Contract mints reusable eligibility.</span></div>
-          <div class="step" id="step-vault"><strong>4. RWA Vault</strong><span>Deposit unlocks through has_pass.</span></div>
-        </div>
-
-        <div class="grid">
-          <article class="card">
-            <h2>Private Inputs</h2>
-            <div class="field">
-              <label for="birthYear">Birth year</label>
-              <input id="birthYear" value="1994" inputmode="numeric" />
+        <main>
+          <section class="hero">
+            <div>
+              <div class="eyebrow">AI-native compliance for Stellar RWAs</div>
+              <h1>Prove eligibility, not identity.</h1>
+              <p class="lead">
+                Immunis turns private KYC facts into reusable ZK clearance for
+                tokenized asset access, without exposing the raw data behind the
+                policy decision.
+              </p>
+              <div class="hero-actions">
+                <button id="prove">Generate Proof</button>
+                <button class="secondary" id="reset">Reset</button>
+              </div>
             </div>
-            <div class="field">
-              <label for="score">Investor score</label>
-              <input id="score" value="781" inputmode="numeric" />
+
+            <div class="proof-strip" aria-label="Protocol metrics">
+              <div class="metric"><strong>709</strong><span>Groth16 constraints</span></div>
+              <div class="metric"><strong>7</strong><span>Public signals</span></div>
+              <div class="metric"><strong>0</strong><span>Raw KYC fields on-chain</span></div>
             </div>
-            <div class="field">
-              <label for="jurisdiction">Jurisdiction</label>
-              <input id="jurisdiction" value="US" />
+          </section>
+
+          <section class="workspace">
+            <div class="toolbar">
+              <div class="status"><span class="dot" id="dot"></span><span id="status">Waiting for private proof</span></div>
+              <div class="actions">
+                <button id="verify" disabled>Mint Pass</button>
+                <button id="deposit" disabled>Deposit To Vault</button>
+              </div>
             </div>
-            <div class="hidden">Never published on-chain</div>
-          </article>
 
-          <article class="card wide">
-            <h2>Proof Packet</h2>
-            <pre id="packet">No proof generated yet.</pre>
-          </article>
+            <div class="steps">
+              <div class="step" id="step-private"><strong>1. Private Inputs</strong><span>KYC facts stay local.</span></div>
+              <div class="step" id="step-proof"><strong>2. ZK Proof</strong><span>Only public signals leave the device.</span></div>
+              <div class="step" id="step-pass"><strong>3. Stellar Pass</strong><span>Contract mints reusable eligibility.</span></div>
+              <div class="step" id="step-vault"><strong>4. RWA Vault</strong><span>Deposit unlocks through has_pass.</span></div>
+            </div>
 
-          <article class="card">
-            <h2>Selective Disclosure Receipt</h2>
-            <pre id="receipt">No receipt yet.</pre>
-          </article>
+            <div class="grid">
+              <article class="card">
+                <h2>Access Policy</h2>
+                <div class="policy-card">
+                  <div class="mini"><span>Policy</span><strong>US Accredited RWA</strong></div>
+                  <div class="mini"><span>Minimum age</span><strong>18</strong></div>
+                  <div class="mini"><span>Score</span><strong>720+</strong></div>
+                  <div class="mini"><span>Vault</span><strong>Tokenized T-Bill</strong></div>
+                </div>
 
-          <article class="card wide">
-            <h2>RWA Vault</h2>
-            <pre id="vault">has_pass(wallet, policy_id) => false
+                <h2>Private Inputs</h2>
+                <div class="field">
+                  <label for="birthYear">Birth year</label>
+                  <input id="birthYear" value="1994" inputmode="numeric" />
+                </div>
+                <div class="field">
+                  <label for="score">Investor score</label>
+                  <input id="score" value="781" inputmode="numeric" />
+                </div>
+                <div class="field">
+                  <label for="jurisdiction">Jurisdiction</label>
+                  <input id="jurisdiction" value="US" />
+                </div>
+                <div class="hidden">Never published on-chain</div>
+              </article>
+
+              <article class="card">
+                <h2>Proof Packet</h2>
+                <pre id="packet">No proof generated yet.</pre>
+              </article>
+
+              <article class="card">
+                <h2>Selective Disclosure Receipt</h2>
+                <pre id="receipt">No receipt yet.</pre>
+              </article>
+
+              <article class="card">
+                <h2>RWA Vault</h2>
+                <pre id="vault">has_pass(wallet, policy_id) => false
 deposit_to_vault(wallet, vault_id, 2500) => blocked</pre>
-          </article>
+              </article>
 
-          <article class="card full">
-            <h2>Judge Takeaway</h2>
-            <pre id="takeaway">Institutions get enforceable access policy. Users keep birth year, investor score, and jurisdiction source data private.</pre>
-          </article>
-        </div>
-      </section>
-    </main>
+              <article class="card full">
+                <h2>Judge Takeaway</h2>
+                <pre id="takeaway">Institutions get enforceable access policy. Users keep birth year, investor score, and jurisdiction source data private.</pre>
+              </article>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
 
     <script>
       const enc = new TextEncoder();
@@ -435,7 +616,7 @@ deposit_to_vault(wallet, vault_id, 2500) => blocked</pre>
         done("step-private", true);
         if (age < policy.min_age || score < policy.min_score || jurisdiction !== policy.jurisdiction) {
           document.getElementById("packet").innerHTML = '<span class="rejected">Private KYC data does not satisfy policy.</span>';
-          setStatus("Policy failed", "#dc2626");
+          setStatus("Policy failed", "#fb7185");
           return;
         }
 
@@ -470,7 +651,7 @@ deposit_to_vault(wallet, vault_id, 2500) => blocked</pre>
         document.getElementById("packet").textContent = JSON.stringify(packet, null, 2);
         document.getElementById("verify").disabled = false;
         done("step-proof", true);
-        setStatus(groth16 ? "Groth16 proof loaded" : "ZK proof generated", "#06b6d4");
+        setStatus(groth16 ? "Groth16 proof loaded" : "ZK proof generated", "#67e8f9");
       }
 
       async function mintPass() {
@@ -478,7 +659,7 @@ deposit_to_vault(wallet, vault_id, 2500) => blocked</pre>
         const expected = await hash(packet.wallet, packet.policy_id, packet.nullifier);
         const ok = expected === packet.proof_digest;
         if (!ok) {
-          setStatus("Verification failed", "#dc2626");
+          setStatus("Verification failed", "#fb7185");
           return;
         }
 
@@ -501,7 +682,7 @@ deposit_to_vault(wallet, vault_id, 2500) => blocked</pre>
           "deposit_to_vault(wallet, vault_id, 2500) => ready";
         document.getElementById("deposit").disabled = false;
         done("step-pass", true);
-        setStatus("Proof pass minted", "#16a34a");
+        setStatus("Proof pass minted", "#85efac");
       }
 
       function depositToVault() {
@@ -519,7 +700,7 @@ deposit_to_vault(wallet, vault_id, 2500) => blocked</pre>
         document.getElementById("takeaway").textContent =
           "Winning loop: private KYC proof -> Immunis proof pass -> gated RWA deposit -> shareable compliance receipt.";
         done("step-vault", true);
-        setStatus("RWA deposit accepted", "#16a34a");
+        setStatus("RWA deposit accepted", "#85efac");
       }
 
       function resetDemo() {
@@ -535,7 +716,7 @@ deposit_to_vault(wallet, vault_id, 2500) => blocked</pre>
         document.getElementById("verify").disabled = true;
         document.getElementById("deposit").disabled = true;
         ["step-private", "step-proof", "step-pass", "step-vault"].forEach((id) => done(id, false));
-        setStatus("Waiting for private proof", "#d97706");
+        setStatus("Waiting for private proof", "#f2c36b");
       }
 
       document.getElementById("prove").addEventListener("click", generateProof);
