@@ -7,22 +7,27 @@
     <style>
       :root {
         color-scheme: dark;
-        --bg: #080b10;
-        --panel: #10151d;
-        --panel-2: #151b24;
-        --ink: #f5f1e8;
-        --muted: #9ba8b7;
-        --line: rgba(245, 241, 232, 0.14);
-        --line-strong: rgba(245, 241, 232, 0.24);
-        --green: #85efac;
-        --cyan: #67e8f9;
-        --amber: #f2c36b;
+        --bg: #030403;
+        --surface: #0a0b0b;
+        --panel: #101214;
+        --panel-2: #17191d;
+        --ink: #f4f0e8;
+        --muted: #9b9b9b;
+        --soft: #c8c4bb;
+        --line: rgba(255, 255, 255, 0.11);
+        --line-strong: rgba(255, 255, 255, 0.2);
+        --green: #9ee6b2;
+        --cyan: #80d8ff;
+        --amber: #ddbc76;
         --red: #fb7185;
-        --white: #ffffff;
       }
 
       * {
         box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
       }
 
       body {
@@ -35,148 +40,35 @@
         color: var(--ink);
       }
 
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
       button,
       input {
         font: inherit;
       }
 
-      .page {
-        min-height: 100vh;
-        padding: 22px;
-      }
-
-      .shell {
-        min-height: calc(100vh - 44px);
-        border: 1px solid var(--line);
-        background: #0b0f15;
-        display: grid;
-        grid-template-rows: auto 1fr;
-      }
-
-      header {
-        min-height: 72px;
-        padding: 0 28px;
-        border-bottom: 1px solid var(--line);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 20px;
-      }
-
-      .brand {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        font-weight: 760;
-        letter-spacing: 0;
-      }
-
-      .mark {
-        width: 38px;
-        height: 38px;
-        border: 1.5px solid var(--ink);
-        border-radius: 50%;
-        position: relative;
-      }
-
-      .mark::before,
-      .mark::after {
-        content: "";
-        position: absolute;
-        left: -8px;
-        right: -8px;
-        height: 2px;
-        background: var(--cyan);
-        transform: rotate(-20deg);
-      }
-
-      .mark::before {
-        top: 13px;
-      }
-
-      .mark::after {
-        bottom: 12px;
-      }
-
-      nav {
-        display: flex;
-        align-items: center;
-        gap: 22px;
-        color: var(--muted);
-        font-size: 14px;
-      }
-
-      .nav-action {
-        min-height: 40px;
-        padding: 0 14px;
-        border: 1px solid var(--line-strong);
-        border-radius: 8px;
-        background: var(--ink);
-        color: #11151b;
-        font-weight: 720;
-      }
-
-      main {
-        display: grid;
-        grid-template-columns: minmax(360px, 0.88fr) minmax(560px, 1.12fr);
-        min-height: 0;
-      }
-
-      .hero {
-        padding: 42px 32px;
-        border-right: 1px solid var(--line);
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        gap: 32px;
-      }
-
-      .eyebrow {
-        color: var(--cyan);
-        font-size: 13px;
-        font-weight: 740;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-      }
-
-      h1 {
-        margin: 14px 0 0;
-        max-width: 760px;
-        font-size: 72px;
-        line-height: 0.95;
-        letter-spacing: 0;
-      }
-
-      .lead {
-        max-width: 560px;
-        color: #c8d0db;
-        font-size: 18px;
-        line-height: 1.55;
-        margin: 22px 0 0;
-      }
-
-      .hero-actions {
-        margin-top: 30px;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-      }
-
       button {
         border: 1px solid transparent;
-        border-radius: 8px;
-        background: var(--ink);
-        color: #10151d;
-        min-height: 44px;
-        padding: 0 15px;
-        font-weight: 760;
+        border-radius: 18px;
+        background: linear-gradient(180deg, #343434, #1f1f1f);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.12),
+          0 0 0 1px rgba(255, 255, 255, 0.06);
+        color: var(--ink);
+        min-height: 52px;
+        padding: 0 22px;
+        font-weight: 720;
         cursor: pointer;
       }
 
       button.secondary {
         background: transparent;
-        color: var(--ink);
-        border-color: var(--line-strong);
+        color: var(--soft);
+        border-color: transparent;
+        box-shadow: none;
       }
 
       button:disabled {
@@ -184,53 +76,267 @@
         cursor: not-allowed;
       }
 
-      .proof-strip {
+      .site-shell {
+        min-height: 100vh;
+        overflow: hidden;
+        background:
+          radial-gradient(circle at 73% 38%, rgba(255, 255, 255, 0.08), transparent 24%),
+          linear-gradient(90deg, #030403 0%, #070807 52%, #151515 100%);
+      }
+
+      .nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 20;
+        height: 72px;
+        padding: 0 clamp(22px, 5vw, 88px);
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        border: 1px solid var(--line);
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        gap: 24px;
+        background: linear-gradient(180deg, rgba(3, 4, 3, 0.9), rgba(3, 4, 3, 0.42), transparent);
       }
 
-      .metric {
-        padding: 18px;
-        border-right: 1px solid var(--line);
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 24px;
+        font-weight: 830;
+        letter-spacing: -0.01em;
       }
 
-      .metric:last-child {
-        border-right: 0;
+      .brand-mark {
+        width: 30px;
+        height: 30px;
+        border: 1.5px solid var(--ink);
+        border-radius: 50%;
+        position: relative;
       }
 
-      .metric strong {
+      .brand-mark::before,
+      .brand-mark::after {
+        content: "";
+        position: absolute;
+        left: -7px;
+        right: -7px;
+        height: 2px;
+        background: var(--green);
+        transform: rotate(-20deg);
+      }
+
+      .brand-mark::before {
+        top: 10px;
+      }
+
+      .brand-mark::after {
+        bottom: 9px;
+      }
+
+      .nav-links,
+      .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 28px;
+        color: #a8a8a8;
+        font-size: 15px;
+        font-weight: 620;
+      }
+
+      .nav-actions {
+        justify-content: end;
+      }
+
+      .chev {
+        color: #707070;
+        margin-left: 3px;
+      }
+
+      .nav-cta {
+        min-height: 44px;
+        padding: 0 22px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.11);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        color: var(--ink);
+        display: inline-flex;
+        align-items: center;
+        font-weight: 730;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      }
+
+      .hero {
+        position: relative;
+        min-height: 100vh;
+        padding: 184px clamp(24px, 10.5vw, 214px) 96px;
+        display: grid;
+        align-items: center;
+      }
+
+      .hero::after {
+        content: "";
+        position: absolute;
+        left: -10%;
+        right: -10%;
+        bottom: -60px;
+        height: 210px;
+        background:
+          linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.8)),
+          radial-gradient(ellipse at center, rgba(255, 255, 255, 0.12), transparent 58%);
+        filter: blur(18px);
+        opacity: 0.7;
+        pointer-events: none;
+      }
+
+      .hero-copy {
+        position: relative;
+        z-index: 2;
+        max-width: 690px;
+      }
+
+      .announcement {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        min-height: 44px;
+        padding: 0 18px;
+        border-radius: 999px;
+        color: #dedede;
+        border: 1px solid transparent;
+        background:
+          linear-gradient(#161717, #161717) padding-box,
+          linear-gradient(100deg, rgba(186, 88, 255, 0.8), rgba(112, 232, 173, 0.72)) border-box;
+        font-size: 16px;
+        box-shadow: 0 0 40px rgba(112, 232, 173, 0.08);
+      }
+
+      .announcement span:last-child {
+        color: #f1f1f1;
+      }
+
+      h1 {
+        margin: 54px 0 0;
+        max-width: 920px;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(72px, 7.4vw, 142px);
+        line-height: 0.9;
+        font-weight: 500;
+        letter-spacing: -0.045em;
+      }
+
+      .no-break {
+        white-space: nowrap;
+      }
+
+      .lead {
+        margin: 36px 0 0;
+        max-width: 690px;
+        color: #aaa;
+        font-size: clamp(20px, 1.5vw, 28px);
+        line-height: 1.45;
+      }
+
+      .hero-actions {
+        margin-top: 46px;
+        display: flex;
+        align-items: center;
+        gap: 30px;
+      }
+
+      .hero-link {
+        color: #b8b8b8;
+        font-size: 18px;
+        font-weight: 730;
+      }
+
+      .hero-visual {
+        position: absolute;
+        z-index: 1;
+        top: 18%;
+        right: -3%;
+        width: min(58vw, 980px);
+        min-width: 560px;
+        opacity: 0.94;
+        pointer-events: none;
+        filter: contrast(1.08) saturate(0.8);
+      }
+
+      .hero-visual img {
         display: block;
-        font-size: 32px;
-        line-height: 1;
+        width: 100%;
+        height: auto;
       }
 
-      .metric span {
-        display: block;
-        margin-top: 8px;
-        color: var(--muted);
+      .demo {
+        position: relative;
+        z-index: 3;
+        padding: 86px clamp(22px, 5vw, 88px) 96px;
+        background:
+          linear-gradient(180deg, rgba(3, 4, 3, 0.94), #050606 18%),
+          radial-gradient(circle at 18% 12%, rgba(158, 230, 178, 0.08), transparent 22%);
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .demo-heading {
+        display: grid;
+        grid-template-columns: minmax(0, 0.8fr) minmax(320px, 0.7fr);
+        gap: 36px;
+        align-items: end;
+        margin-bottom: 34px;
+      }
+
+      .eyebrow {
+        color: var(--green);
         font-size: 13px;
+        font-weight: 780;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
       }
 
-      .workspace {
-        padding: 28px;
-        display: grid;
-        grid-template-rows: auto auto 1fr;
-        gap: 16px;
-        min-width: 0;
+      h2 {
+        margin: 12px 0 0;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(42px, 5vw, 78px);
+        line-height: 0.96;
+        font-weight: 500;
+        letter-spacing: -0.035em;
       }
 
-      .toolbar {
+      .demo-copy {
+        margin: 0;
+        color: #aaa;
+        font-size: 18px;
+        line-height: 1.55;
+      }
+
+      .demo-panel {
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        background:
+          linear-gradient(145deg, rgba(255, 255, 255, 0.06), transparent 38%),
+          rgba(12, 13, 14, 0.9);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.08),
+          0 28px 90px rgba(0, 0, 0, 0.42);
+        overflow: hidden;
+      }
+
+      .demo-topbar {
+        padding: 18px 20px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 16px;
+        gap: 18px;
+        border-bottom: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.025);
       }
 
       .status {
         display: flex;
         align-items: center;
-        gap: 9px;
+        gap: 10px;
         color: var(--muted);
         font-size: 14px;
       }
@@ -245,24 +351,33 @@
       .actions {
         display: flex;
         justify-content: flex-end;
-        gap: 8px;
+        gap: 10px;
         flex-wrap: wrap;
+      }
+
+      .demo-body {
+        padding: 20px;
+        display: grid;
+        grid-template-columns: minmax(250px, 0.72fr) minmax(480px, 1.28fr);
+        gap: 18px;
+        min-width: 0;
       }
 
       .steps {
         display: grid;
         grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 8px;
+        gap: 10px;
+        grid-column: 1 / -1;
       }
 
       .step {
-        min-height: 92px;
-        background: var(--panel);
+        min-height: 98px;
+        background: rgba(255, 255, 255, 0.035);
         border: 1px solid var(--line);
-        border-radius: 8px;
-        padding: 13px;
+        border-radius: 16px;
+        padding: 14px;
         display: grid;
-        gap: 7px;
+        gap: 8px;
       }
 
       .step strong {
@@ -271,27 +386,19 @@
 
       .step span {
         color: var(--muted);
-        font-size: 12px;
+        font-size: 13px;
         line-height: 1.35;
       }
 
       .step.done {
-        border-color: rgba(133, 239, 172, 0.46);
-        background: #102019;
-      }
-
-      .grid {
-        display: grid;
-        grid-template-columns: minmax(220px, 0.72fr) minmax(340px, 1.28fr);
-        gap: 12px;
-        align-content: start;
-        min-width: 0;
+        border-color: rgba(158, 230, 178, 0.48);
+        background: rgba(158, 230, 178, 0.08);
       }
 
       .card {
-        background: var(--panel);
+        background: rgba(255, 255, 255, 0.035);
         border: 1px solid var(--line);
-        border-radius: 8px;
+        border-radius: 18px;
         padding: 18px;
         display: grid;
         gap: 14px;
@@ -299,13 +406,9 @@
         align-self: start;
       }
 
-      .card h2 {
+      .card h3 {
         margin: 0;
         font-size: 17px;
-      }
-
-      .muted {
-        color: var(--muted);
       }
 
       .policy-card {
@@ -315,11 +418,11 @@
       }
 
       .mini {
-        background: var(--panel-2);
+        background: rgba(255, 255, 255, 0.035);
         border: 1px solid var(--line);
-        border-radius: 8px;
+        border-radius: 14px;
         padding: 12px;
-        min-height: 78px;
+        min-height: 76px;
       }
 
       .mini span {
@@ -337,7 +440,7 @@
 
       .field {
         display: grid;
-        gap: 6px;
+        gap: 7px;
       }
 
       label {
@@ -347,17 +450,17 @@
 
       input {
         width: 100%;
-        min-height: 42px;
+        min-height: 44px;
         border: 1px solid var(--line);
-        border-radius: 8px;
-        padding: 0 11px;
-        background: #0c1118;
+        border-radius: 14px;
+        padding: 0 12px;
+        background: #090a0b;
         color: var(--ink);
         outline: none;
       }
 
       input:focus {
-        border-color: var(--cyan);
+        border-color: rgba(158, 230, 178, 0.7);
       }
 
       .hidden {
@@ -373,81 +476,198 @@
 
       pre {
         margin: 0;
-        max-height: 338px;
+        max-height: 340px;
         overflow: auto;
         white-space: pre-wrap;
         overflow-wrap: anywhere;
         font-size: 12px;
         line-height: 1.48;
-        color: #d7dee8;
-        background: #090d12;
-        border: 1px solid rgba(245, 241, 232, 0.08);
-        border-radius: 8px;
-        padding: 13px;
+        color: #ddd;
+        background: #050606;
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        border-radius: 14px;
+        padding: 14px;
       }
 
       .full {
         grid-column: 1 / -1;
       }
 
-      @media (max-width: 1160px) {
-        main {
-          grid-template-columns: 1fr;
+      .footer {
+        position: relative;
+        padding: 72px clamp(22px, 7vw, 120px) 34px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        background:
+          radial-gradient(circle at 78% 0%, rgba(158, 230, 178, 0.08), transparent 34%),
+          linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 38%);
+      }
+
+      .footer-grid {
+        display: grid;
+        grid-template-columns: minmax(260px, 1.4fr) repeat(3, minmax(140px, 0.6fr));
+        gap: 34px;
+      }
+
+      .footer-brand {
+        display: grid;
+        gap: 18px;
+        max-width: 390px;
+      }
+
+      .footer-brand p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.6;
+      }
+
+      .footer-col {
+        display: grid;
+        align-content: start;
+        gap: 13px;
+      }
+
+      .footer-col h3 {
+        margin: 0 0 5px;
+        color: var(--ink);
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .footer-col a {
+        color: #a8a8a8;
+        font-size: 14px;
+      }
+
+      .footer-col a:hover,
+      .footer-bottom a:hover {
+        color: var(--ink);
+      }
+
+      .footer-bottom {
+        margin-top: 52px;
+        padding-top: 24px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        color: #777;
+        font-size: 13px;
+      }
+
+      .footer-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        color: #a8a8a8;
+      }
+
+      .footer-status::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: var(--green);
+        box-shadow: 0 0 16px rgba(158, 230, 178, 0.72);
+      }
+
+      @media (max-width: 1180px) {
+        .nav {
+          grid-template-columns: 1fr auto;
+        }
+
+        .nav-links {
+          display: none;
         }
 
         .hero {
-          border-right: 0;
-          border-bottom: 1px solid var(--line);
+          padding: 150px clamp(24px, 7vw, 76px) 96px;
         }
 
         h1 {
-          font-size: 56px;
+          max-width: 820px;
+          font-size: clamp(62px, 8vw, 94px);
+        }
+
+        .hero-visual {
+          right: -18%;
+          opacity: 0.48;
+        }
+
+        .demo-heading,
+        .demo-body {
+          grid-template-columns: 1fr;
+        }
+
+        .steps {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .footer-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
         }
       }
 
       @media (max-width: 760px) {
-        .page {
-          padding: 0;
+        .nav {
+          height: 64px;
+          padding: 0 18px;
         }
 
-        .shell {
-          min-height: 100vh;
-          border-left: 0;
-          border-right: 0;
+        .brand {
+          font-size: 19px;
         }
 
-        header,
-        .hero,
-        .workspace {
-          padding-left: 18px;
-          padding-right: 18px;
-        }
-
-        nav {
+        .nav-actions a:not(.nav-cta) {
           display: none;
         }
 
+        .nav-cta {
+          min-height: 40px;
+          padding: 0 14px;
+          border-radius: 14px;
+        }
+
+        .hero {
+          min-height: 92vh;
+          padding: 122px 16px 62px;
+        }
+
+        .announcement {
+          min-height: 38px;
+          font-size: 14px;
+        }
+
         h1 {
-          font-size: 42px;
+          margin-top: 36px;
+          font-size: clamp(26px, 8.4vw, 68px);
         }
 
-        .proof-strip,
-        .steps,
-        .grid,
-        .policy-card {
-          grid-template-columns: 1fr;
+        .lead {
+          font-size: 18px;
         }
 
-        .metric {
-          border-right: 0;
-          border-bottom: 1px solid var(--line);
+        .hero-actions {
+          align-items: flex-start;
+          flex-direction: column;
+          gap: 18px;
         }
 
-        .metric:last-child {
-          border-bottom: 0;
+        .hero-visual {
+          top: 18%;
+          right: -62%;
+          min-width: 520px;
+          width: 122vw;
+          opacity: 0.28;
         }
 
-        .toolbar {
+        .demo {
+          padding: 64px 16px 72px;
+        }
+
+        .demo-topbar {
           align-items: flex-start;
           flex-direction: column;
         }
@@ -455,64 +675,115 @@
         .actions {
           justify-content: flex-start;
         }
+
+        .steps,
+        .policy-card {
+          grid-template-columns: 1fr;
+        }
+
+        .demo-body {
+          padding: 14px;
+        }
+
+        button {
+          min-height: 48px;
+        }
+
+        .footer {
+          padding: 56px 18px 30px;
+        }
+
+        .footer-grid {
+          grid-template-columns: 1fr;
+          gap: 28px;
+        }
+
+        .footer-bottom {
+          align-items: flex-start;
+          flex-direction: column;
+        }
       }
+
     </style>
   </head>
   <body>
-    <div class="page">
-      <div class="shell">
-        <header>
-          <div class="brand"><div class="mark" aria-hidden="true"></div> Immunis Protocol</div>
-          <nav aria-label="Product navigation">
-            <span>Onboard</span>
-            <span>Policy</span>
-            <span>Vaults</span>
-            <button class="nav-action" type="button">Proof demo</button>
-          </nav>
-        </header>
+    <div class="site-shell">
+      <header class="nav">
+        <a class="brand" href="#">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span>Immunis</span>
+        </a>
 
-        <main>
-          <section class="hero">
+        <nav class="nav-links" aria-label="Main navigation">
+          <a href="#demo">Protocol <span class="chev">⌄</span></a>
+          <a href="#demo">Proofs <span class="chev">⌄</span></a>
+          <a href="#demo">Vaults <span class="chev">⌄</span></a>
+          <a href="#demo">Docs <span class="chev">⌄</span></a>
+          <a href="#demo">AI <span class="chev">⌄</span></a>
+          <a href="#demo">Pricing</a>
+        </nav>
+
+        <div class="nav-actions">
+          <a href="#demo">Log in</a>
+          <a class="nav-cta" href="#demo">Get started</a>
+        </div>
+      </header>
+
+      <main>
+        <section class="hero" aria-label="Immunis Protocol homepage">
+          <div class="hero-copy">
+            <a class="announcement" href="#demo">
+              <span>Introducing Immunis Protocol</span>
+              <span>›</span>
+            </a>
+            <h1>Private compliance <span class="no-break">for real-world assets</span></h1>
+            <p class="lead">
+              Prove eligibility without revealing identity. Immunis turns private KYC
+              facts into reusable zero-knowledge clearance for Stellar RWA access.
+            </p>
+            <div class="hero-actions">
+              <a class="nav-cta" href="#demo">Get started</a>
+              <a class="hero-link" href="#demo">Try the proof demo</a>
+            </div>
+          </div>
+          <div class="hero-visual" aria-hidden="true">
+            <img src="assets/proof-cube-hero.png" alt="" />
+          </div>
+        </section>
+
+        <section class="demo" id="demo">
+          <div class="demo-heading">
             <div>
-              <div class="eyebrow">AI-native compliance for Stellar RWAs</div>
-              <h1>Prove eligibility, not identity.</h1>
-              <p class="lead">
-                Immunis turns private KYC facts into reusable ZK clearance for
-                tokenized asset access, without exposing the raw data behind the
-                policy decision.
-              </p>
-              <div class="hero-actions">
+              <div class="eyebrow">Live proof cockpit</div>
+              <h2>Mint access from a private proof.</h2>
+            </div>
+            <p class="demo-copy">
+              Run the hackathon flow end to end: local eligibility proof, reusable
+              Stellar pass, and gated tokenized T-Bill vault deposit.
+            </p>
+          </div>
+
+          <div class="demo-panel">
+            <div class="demo-topbar">
+              <div class="status"><span class="dot" id="dot"></span><span id="status">Waiting for private proof</span></div>
+              <div class="actions">
                 <button id="prove">Generate Proof</button>
+                <button id="verify" disabled>Mint Pass</button>
+                <button id="deposit" disabled>Deposit To Vault</button>
                 <button class="secondary" id="reset">Reset</button>
               </div>
             </div>
 
-            <div class="proof-strip" aria-label="Protocol metrics">
-              <div class="metric"><strong>709</strong><span>Groth16 constraints</span></div>
-              <div class="metric"><strong>7</strong><span>Public signals</span></div>
-              <div class="metric"><strong>0</strong><span>Raw KYC fields on-chain</span></div>
-            </div>
-          </section>
-
-          <section class="workspace">
-            <div class="toolbar">
-              <div class="status"><span class="dot" id="dot"></span><span id="status">Waiting for private proof</span></div>
-              <div class="actions">
-                <button id="verify" disabled>Mint Pass</button>
-                <button id="deposit" disabled>Deposit To Vault</button>
+            <div class="demo-body">
+              <div class="steps">
+                <div class="step" id="step-private"><strong>1. Private Inputs</strong><span>KYC facts stay local.</span></div>
+                <div class="step" id="step-proof"><strong>2. ZK Proof</strong><span>Only public signals leave the device.</span></div>
+                <div class="step" id="step-pass"><strong>3. Stellar Pass</strong><span>Contract mints reusable eligibility.</span></div>
+                <div class="step" id="step-vault"><strong>4. RWA Vault</strong><span>Deposit unlocks through has_pass.</span></div>
               </div>
-            </div>
 
-            <div class="steps">
-              <div class="step" id="step-private"><strong>1. Private Inputs</strong><span>KYC facts stay local.</span></div>
-              <div class="step" id="step-proof"><strong>2. ZK Proof</strong><span>Only public signals leave the device.</span></div>
-              <div class="step" id="step-pass"><strong>3. Stellar Pass</strong><span>Contract mints reusable eligibility.</span></div>
-              <div class="step" id="step-vault"><strong>4. RWA Vault</strong><span>Deposit unlocks through has_pass.</span></div>
-            </div>
-
-            <div class="grid">
               <article class="card">
-                <h2>Access Policy</h2>
+                <h3>Access Policy</h3>
                 <div class="policy-card">
                   <div class="mini"><span>Policy</span><strong>US Accredited RWA</strong></div>
                   <div class="mini"><span>Minimum age</span><strong>18</strong></div>
@@ -520,7 +791,7 @@
                   <div class="mini"><span>Vault</span><strong>Tokenized T-Bill</strong></div>
                 </div>
 
-                <h2>Private Inputs</h2>
+                <h3>Private Inputs</h3>
                 <div class="field">
                   <label for="birthYear">Birth year</label>
                   <input id="birthYear" value="1994" inputmode="numeric" />
@@ -537,29 +808,71 @@
               </article>
 
               <article class="card">
-                <h2>Proof Packet</h2>
+                <h3>Proof Packet</h3>
                 <pre id="packet">No proof generated yet.</pre>
               </article>
 
               <article class="card">
-                <h2>Selective Disclosure Receipt</h2>
+                <h3>Selective Disclosure Receipt</h3>
                 <pre id="receipt">No receipt yet.</pre>
               </article>
 
               <article class="card">
-                <h2>RWA Vault</h2>
+                <h3>RWA Vault</h3>
                 <pre id="vault">has_pass(wallet, policy_id) => false
 deposit_to_vault(wallet, vault_id, 2500) => blocked</pre>
               </article>
 
               <article class="card full">
-                <h2>Judge Takeaway</h2>
+                <h3>Judge Takeaway</h3>
                 <pre id="takeaway">Institutions get enforceable access policy. Users keep birth year, investor score, and jurisdiction source data private.</pre>
               </article>
             </div>
-          </section>
-        </main>
-      </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a class="brand" href="#">
+              <span class="brand-mark" aria-hidden="true"></span>
+              <span>Immunis</span>
+            </a>
+            <p>
+              Privacy-preserving compliance for Stellar real-world asset products.
+              Prove eligibility, mint reusable access, and keep sensitive KYC facts
+              off-chain.
+            </p>
+          </div>
+
+          <div class="footer-col">
+            <h3>Protocol</h3>
+            <a href="#demo">Proof cockpit</a>
+            <a href="#demo">Eligibility policies</a>
+            <a href="#demo">RWA vault access</a>
+          </div>
+
+          <div class="footer-col">
+            <h3>Builders</h3>
+            <a href="#demo">Circom circuit</a>
+            <a href="#demo">Soroban contract</a>
+            <a href="#demo">Demo proof</a>
+          </div>
+
+          <div class="footer-col">
+            <h3>Project</h3>
+            <a href="https://github.com/OutstandingVick/immunis-protocol">GitHub</a>
+            <a href="#demo">Submission</a>
+            <a href="#demo">Documentation</a>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <span>© 2026 Immunis Protocol. Built for Stellar Hacks ZK.</span>
+          <span class="footer-status">Proof demo ready</span>
+        </div>
+      </footer>
     </div>
 
     <script>
@@ -651,7 +964,7 @@ deposit_to_vault(wallet, vault_id, 2500) => blocked</pre>
         document.getElementById("packet").textContent = JSON.stringify(packet, null, 2);
         document.getElementById("verify").disabled = false;
         done("step-proof", true);
-        setStatus(groth16 ? "Groth16 proof loaded" : "ZK proof generated", "#67e8f9");
+        setStatus(groth16 ? "Groth16 proof loaded" : "ZK proof generated", "#80d8ff");
       }
 
       async function mintPass() {
@@ -682,7 +995,7 @@ deposit_to_vault(wallet, vault_id, 2500) => blocked</pre>
           "deposit_to_vault(wallet, vault_id, 2500) => ready";
         document.getElementById("deposit").disabled = false;
         done("step-pass", true);
-        setStatus("Proof pass minted", "#85efac");
+        setStatus("Proof pass minted", "#9ee6b2");
       }
 
       function depositToVault() {
@@ -700,7 +1013,7 @@ deposit_to_vault(wallet, vault_id, 2500) => blocked</pre>
         document.getElementById("takeaway").textContent =
           "Winning loop: private KYC proof -> Immunis proof pass -> gated RWA deposit -> shareable compliance receipt.";
         done("step-vault", true);
-        setStatus("RWA deposit accepted", "#85efac");
+        setStatus("RWA deposit accepted", "#9ee6b2");
       }
 
       function resetDemo() {
@@ -716,7 +1029,7 @@ deposit_to_vault(wallet, vault_id, 2500) => blocked</pre>
         document.getElementById("verify").disabled = true;
         document.getElementById("deposit").disabled = true;
         ["step-private", "step-proof", "step-pass", "step-vault"].forEach((id) => done(id, false));
-        setStatus("Waiting for private proof", "#f2c36b");
+        setStatus("Waiting for private proof", "#ddbc76");
       }
 
       document.getElementById("prove").addEventListener("click", generateProof);
